@@ -1,6 +1,8 @@
 ![Ship of Harkinian](docs/shiptitle.darkmode.png#gh-dark-mode-only)
 ![Ship of Harkinian](docs/shiptitle.lightmode.png#gh-light-mode-only)
 
+# It looks like this is a rando change, please check out [the `develop-rando` branch](https://github.com/HarbourMasters/Shipwright/tree/develop-rando) as there's a huge rework in progress!
+
 ## Website
 
 Official Website: https://www.shipofharkinian.com/

@@ -64,6 +64,7 @@ const std::string Randomizer::hintMessageTableID = "RandomizerHints";
 const std::string Randomizer::merchantMessageTableID = "RandomizerMerchants";
 const std::string Randomizer::rupeeMessageTableID = "RandomizerRupees";
 const std::string Randomizer::triforcePieceMessageTableID = "RandomizerTriforcePiece";
+const std::string Randomizer::GKShardMessageTableID = "RandomizerGKShard";
 const std::string Randomizer::NaviRandoMessageTableID = "RandomizerNavi";
 const std::string Randomizer::IceTrapRandoMessageTableID = "RandomizerIceTrap";
 const std::string Randomizer::randoMiscHintsTableID = "RandomizerMiscHints";
@@ -2716,6 +2717,70 @@ CustomMessage Randomizer::GetTriforcePieceMessage() {
     return messageEntry;
 }
 
+void CreateGKShardMessages() {
+    CustomMessage GKShardMessages[NUM_GK_SHARD_MESSAGES] = {
+
+        { "You found a %yshard of Ganon's Boss Key%w!&%g[[current]]%w down, %c[[remaining]]%w to go. It's a start!",
+          "Ein %yshard of Ganon's Boss Key%w! Du hast&%g[[current]]%w von %c[[required]]%w gefunden. Es ist ein&Anfang!",
+          "Vous trouvez un %yshard of Ganon's Boss Key%w! Vous en avez %g[[current]]%w, il en&reste %c[[remaining]]%w à trouver. C'est un début!" },
+
+        { "You found a %yshard of Ganon's Boss Key%w!&%g[[current]]%w down, %c[[remaining]]%w to go. Progress!",
+          "Ein %yshard of Ganon's Boss Key%w! Du hast&%g[[current]]%w von %c[[required]]%w gefunden. Es geht voran!",
+          "Vous trouvez un %yshard of Ganon's Boss Key%w! Vous en avez %g[[current]]%w, il en&reste %c[[remaining]]%w à trouver. Ça avance!" },
+
+        { "You found a %yshard of Ganon's Boss Key%w!&%g[[current]]%w down, %c[[remaining]]%w to go. Over half-way&there!",
+          "Ein %yshard of Ganon's Boss Key%w! Du hast&schon %g[[current]]%w von %c[[required]]%w gefunden. Schon&über die Hälfte!",
+          "Vous trouvez un %yshard of Ganon's Boss Key%w! Vous en avez %g[[current]]%w, il en&reste %c[[remaining]]%w à trouver. Il en reste un&peu moins que la moitié!" },
+
+        { "You found a %yshard of Ganon's Boss Key%w!&%g[[current]]%w down, %c[[remaining]]%w to go. Almost done!",
+          "Ein %yshard of Ganon's Boss Key%w! Du hast&schon %g[[current]]%w von %c[[required]]%w gefunden. Fast&geschafft!",
+          "Vous trouvez un %yshard of Ganon's Boss Key%w! Vous en avez %g[[current]]%w, il en&reste %c[[remaining]]%w à trouver. C'est presque&terminé!" },
+
+        { "You completed the %yGanon's Boss Key%w! %gGG%w!",
+          "Das %yGanon's Boss Key%w! Du hast&alle Splitter gefunden. %gGut gemacht%w!",
+          "Vous avez complété la %yGanon's Boss Key%w! %gFélicitations%w!" },
+
+        { "You found a spare %yshard of Ganon's Boss Key%w!&You only needed %c[[required]]%w, but you have %g[[current]]%w!",
+          "Ein übriger %yshard of Ganon's Boss Key%w! Du&hast nun %g[[current]]%w von %c[[required]]%w nötigen gefunden.",
+          "Vous avez trouvé un %yshard of Ganon's Boss Key%w en plus! Vous n'aviez besoin&que de %c[[required]]%w, mais vous en avez %g[[current]]%w en&tout!" },
+    };
+    CustomMessageManager* customMessageManager = CustomMessageManager::Instance;
+    customMessageManager->AddCustomMessageTable(Randomizer::GKShardMessageTableID);
+    for (unsigned int i = 0; i <= (NUM_GK_SHARD_MESSAGES - 1); i++) {
+        customMessageManager->CreateMessage(Randomizer::GKShardMessageTableID, i, GKShardMessages[i]);
+    }
+}
+
+CustomMessage Randomizer::GetGKShardMessage() {
+    // Item is only given after the textbox, so reflect that inside the textbox.
+    uint8_t current = gSaveContext.GKShardsCollected + 1;
+    uint8_t required = OTRGlobals::Instance->gRandomizer->GetRandoSettingValue(RSK_GK_SHARDS_REQUIRED) + 1;
+    uint8_t remaining = required - current;
+    float percentageCollected = (float)current / (float)required;
+    uint8_t messageIndex;
+
+    if (percentageCollected <= 0.25) {
+        messageIndex = GKS_MESSAGE_START;
+    } else if (percentageCollected <= 0.5) {
+        messageIndex = GKS_MESSAGE_PROGRESS;
+    } else if (percentageCollected <= 0.75) {
+        messageIndex = GKS_MESSAGE_HALFWAY;
+    } else if (percentageCollected < 1) {
+        messageIndex = GKS_MESSAGE_ALMOSTDONE;
+    } else if (current == required) {
+        messageIndex = GKS_MESSAGE_FINISHED;
+    } else {
+        messageIndex = GKS_MESSAGE_SURPLUS;
+    }
+
+    CustomMessage messageEntry =
+        CustomMessageManager::Instance->RetrieveMessage(Randomizer::GKShardMessageTableID, messageIndex);
+    messageEntry.Replace("[[current]]", std::to_string(current));
+    messageEntry.Replace("[[remaining]]", std::to_string(remaining));
+    messageEntry.Replace("[[required]]", std::to_string(required));
+    return messageEntry;
+}
+
 void CreateNaviRandoMessages() {
     CustomMessage NaviMessages[NUM_NAVI_MESSAGES] = {
 
@@ -3461,6 +3526,7 @@ void Randomizer::CreateCustomMessages() {
     CreateGetItemMessages(&getItemMessages);
     CreateRupeeMessages();
     CreateTriforcePieceMessages();
+    CreateGKShardMessages();
     CreateNaviRandoMessages();
     CreateFireTempleGoronMessages();
 }

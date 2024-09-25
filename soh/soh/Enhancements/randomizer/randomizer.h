@@ -19,6 +19,7 @@
 
 #define MAX_SEED_STRING_SIZE 1024
 #define NUM_TRIFORCE_PIECE_MESSAGES 6
+#define NUM_GK_SHARD_MESSAGES 6
 #define NUM_NAVI_MESSAGES 19
 #define NUM_GORON_MESSAGES 9
 
@@ -36,6 +37,7 @@ class Randomizer {
     static const std::string merchantMessageTableID;
     static const std::string rupeeMessageTableID;
     static const std::string triforcePieceMessageTableID;
+    static const std::string GKShardMessageTableID;
     static const std::string NaviRandoMessageTableID;
     static const std::string IceTrapRandoMessageTableID;
     static const std::string randoMiscHintsTableID;
@@ -69,6 +71,7 @@ class Randomizer {
     static CustomMessage GetRupeeMessage(u16 rupeeTextId);
     static CustomMessage GetIceTrapMessage();
     static CustomMessage GetTriforcePieceMessage();
+    static CustomMessage GetGKShardMessage();
     bool CheckContainsVanillaItem(RandomizerCheck randoCheck);
 };
 

@@ -4331,4 +4331,12 @@ typedef enum {
     TH_MESSAGE_SURPLUS,
 } TriforceHuntMessages;
 
+typedef enum {
+    GKS_MESSAGE_START,
+    GKS_MESSAGE_PROGRESS,
+    GKS_MESSAGE_HALFWAY,
+    GKS_MESSAGE_ALMOSTDONE,
+    GKS_MESSAGE_FINISHED,
+    GKS_MESSAGE_SURPLUS,
+} GKShardsMessages;
 

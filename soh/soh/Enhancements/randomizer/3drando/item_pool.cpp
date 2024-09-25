@@ -721,6 +721,11 @@ void GenerateItemPool() {
     ctx->PlaceItemInLocation(RC_GANON, RG_TRIFORCE); // Win condition
   }
 
+  if (ctx->GetOption(RSK_GK_SHARDS)) {
+    ctx->possibleIceTrapModels.push_back(RG_GK_SHARD);
+    AddItemToMainPool(RG_GK_SHARD, (ctx->GetOption(RSK_GK_SHARDS_TOTAL).Value<uint8_t>() + 1));
+  }
+
   //Fixed item locations
   ctx->PlaceItemInLocation(RC_HC_ZELDAS_LETTER, RG_ZELDAS_LETTER);
 
@@ -1336,6 +1341,8 @@ void GenerateItemPool() {
 
   if (ctx->GetOption(RSK_GANONS_BOSS_KEY).Is(RO_GANON_BOSS_KEY_KAK_TOKENS)) {
     ctx->PlaceItemInLocation(RC_KAK_100_GOLD_SKULLTULA_REWARD, RG_GANONS_CASTLE_BOSS_KEY);
+  } else if (ctx->GetOption(RSK_GANONS_BOSS_KEY).Is(RO_GANON_BOSS_KEY_GK_SHARDS)) {
+    ctx->PlaceItemInLocation(RC_GANONS_KEY_COMPLETED, RG_GANONS_CASTLE_BOSS_KEY);
   } else if (ctx->GetOption(RSK_GANONS_BOSS_KEY).Value<uint8_t>() >= RO_GANON_BOSS_KEY_LACS_VANILLA && ctx->GetOption(RSK_GANONS_BOSS_KEY).IsNot(RO_GANON_BOSS_KEY_TRIFORCE_HUNT)) {
     ctx->PlaceItemInLocation(RC_TOT_LIGHT_ARROWS_CUTSCENE, RG_GANONS_CASTLE_BOSS_KEY);
   } else if (ctx->GetOption(RSK_GANONS_BOSS_KEY).Is(RO_GANON_BOSS_KEY_VANILLA)) {

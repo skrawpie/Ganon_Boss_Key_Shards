@@ -555,6 +555,7 @@ namespace Rando {
 
         DoubleDefense = HasItem(RG_DOUBLE_DEFENSE);
         TriforcePieces = GetSaveContext()->triforcePiecesCollected;
+        GKShards = GetSaveContext()->GKShardsCollected;
         Greg = HasItem(RG_GREG_RUPEE);
         GoldSkulltulaTokens = GetGSCount();
 
@@ -664,6 +665,7 @@ namespace Rando {
                             (ctx->GetSettings()->LACSCondition() == RO_LACS_DUNGEONS   && DungeonCount + (Greg && GregInLacsLogic ? 1 : 0) >= ctx->GetOption(RSK_LACS_DUNGEON_COUNT).Value<uint8_t>())                ||
                             (ctx->GetSettings()->LACSCondition() == RO_LACS_TOKENS     && GoldSkulltulaTokens >= ctx->GetOption(RSK_LACS_TOKEN_COUNT).Value<uint8_t>());
         CanCompleteTriforce = TriforcePieces >= ctx->GetOption(RSK_TRIFORCE_HUNT_PIECES_REQUIRED).Value<uint8_t>();
+        CanCompleteGanonBossKey = GKShards >= ctx->GetOption(RSK_GK_SHARDS_REQUIRED).Value<uint8_t>();
         StopPerformanceTimer(PT_UPDATE_HELPERS);
     }
 
@@ -1150,6 +1152,9 @@ namespace Rando {
                 break;
             case RG_TRIFORCE_PIECE:
                 mSaveContext->triforcePiecesCollected += (!state ? -1 : 1);
+                break;
+            case RG_GK_SHARD:
+                mSaveContext->GKShardsCollected += (!state ? -1 : 1);
                 break;
             case RG_BOMBCHU_5:
             case RG_BOMBCHU_10:
@@ -1706,6 +1711,9 @@ namespace Rando {
 
         //Triforce Pieces
         TriforcePieces = 0;
+
+        // Ganon's Key Shards
+        GKShards = 0;
 
         //Boss Souls
         CanSummonGohma        = false;

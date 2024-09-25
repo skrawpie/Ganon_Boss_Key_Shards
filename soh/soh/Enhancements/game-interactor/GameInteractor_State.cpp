@@ -22,6 +22,7 @@ uint8_t GameInteractor::State::SlipperyFloorActive = 0;
 uint8_t GameInteractor::State::SecondCollisionUpdate = 0;
 uint8_t GameInteractor::State::TriforceHuntPieceGiven = 0;
 uint8_t GameInteractor::State::TriforceHuntCreditsWarpActive = 0;
+uint8_t GameInteractor::State::GKShardGiven = 0;
 
 void GameInteractor::State::SetPacifistMode(bool active) {
     PacifistModeActive = active;
@@ -138,4 +139,9 @@ void GameInteractor_SetTriforceHuntPieceGiven(uint8_t state) {
 // MARK: - GameInteractor::State::TriforceHuntCreditsWarpActive
 void GameInteractor_SetTriforceHuntCreditsWarpActive(uint8_t state) {
     GameInteractor::State::TriforceHuntCreditsWarpActive = state;
+}
+
+// MARK: - GameInteractor::State::GKShardGiven
+void GameInteractor_SetGKShardGiven(uint8_t state) {
+    GameInteractor::State::GKShardGiven = state;
 }

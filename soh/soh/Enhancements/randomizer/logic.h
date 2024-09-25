@@ -151,6 +151,9 @@ class Logic {
     // Triforce Pieces
     uint8_t TriforcePieces = 0;
 
+    // Ganon's Boss Key Shards
+    uint8_t GKShards = 0;
+
     // Boss Keys
     bool BossKeyForestTemple = false;
     bool BossKeyFireTemple = false;
@@ -319,6 +322,7 @@ class Logic {
     bool AtNight = false;
     uint8_t Age = 0;
     bool CanCompleteTriforce = false;
+    bool CanCompleteGanonBossKey = false;
 
     bool CanSummonGohma = false;
     bool CanSummonKingDodongo = false;

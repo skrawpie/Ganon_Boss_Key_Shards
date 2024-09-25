@@ -117,6 +117,13 @@ void Settings::CreateOptionDescriptions() {
         "The amount of Triforce pieces that will be placed in the world. "
         "Keep in mind seed generation can fail if more pieces are placed than there are junk items in the item pool.";
     mOptionDescriptions[RSK_TRIFORCE_HUNT_PIECES_REQUIRED] = "The amount of Triforce pieces required to win the game.";
+    mOptionDescriptions[RSK_GK_SHARDS] =
+        "Pieces of Ganon's Boss Key are scattered around the world. Find them all to challenge him!\n\n"
+        "When the required amount of shards have been found, the game is saved and Ganon's Boss key is given.";
+    mOptionDescriptions[RSK_GK_SHARDS_TOTAL] =
+        "The amount of shards to place in the world."
+        "Seed generation can fail if more pieces are placed than there are junk items in the item pool.";
+    mOptionDescriptions[RSK_GK_SHARDS_REQUIRED] = "The amount of shards required to receive Ganon's Boss Key.";
     mOptionDescriptions[RSK_SHUFFLE_DUNGEON_ENTRANCES] =
         "Shuffle the pool of dungeon entrances, including Bottom of the Well, Ice Cavern and Gerudo Training Grounds.\n"
         "\n"

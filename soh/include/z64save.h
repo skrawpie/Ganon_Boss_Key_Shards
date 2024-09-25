@@ -287,6 +287,7 @@ typedef struct {
     /*        */ u8 mqDungeonCount;
     /*        */ u16 adultTradeItems;
     /*        */ u8 triforcePiecesCollected;
+    /*        */ u8 GKShardsCollected;
     // #endregion
 } SaveContext; // size = 0x1428
 

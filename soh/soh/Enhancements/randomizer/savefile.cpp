@@ -222,6 +222,9 @@ extern "C" void Randomizer_InitSaveFile() {
     // Reset triforce pieces collected
     gSaveContext.triforcePiecesCollected = 0;
 
+    // Reset Ganon's Boss Key shards collected
+    gSaveContext.GKShardsCollected = 0;
+
     // Set Cutscene flags and texts to skip them
     // Now handled by cutscene skips
     // Flags_SetInfTable(INFTABLE_GREETED_BY_SARIA);

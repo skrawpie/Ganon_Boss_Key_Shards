@@ -2752,6 +2752,20 @@ u16 Randomizer_Item_Give(PlayState* play, GetItemEntry giEntry) {
         return Return_Item_Entry(giEntry, RG_NONE);
     }
 
+    if (item == RG_GK_SHARD) {
+        gSaveContext.GKShardsCollected++;
+        GameInteractor_SetGKShardGiven(true);
+
+        // Give Ganon's Boss Key when complete.
+        if (gSaveContext.GKShardsCollected == (Randomizer_GetSettingValue(RSK_GK_SHARDS_REQUIRED) + 1)) {
+            //gSaveContext.sohStats.itemTimestamp[TIMESTAMP_TRIFORCE_COMPLETED] = GAMEPLAYSTAT_TOTAL_TIME;
+            Flags_SetRandomizerInf(RAND_INF_GRANT_GANONS_BOSSKEY);
+            Play_PerformSave(play);
+        }
+
+        return Return_Item_Entry(giEntry, RG_NONE);
+    }
+
     if (item >= RG_GOHMA_SOUL && item <= RG_GANON_SOUL) {
         u8 index = item - RG_GOHMA_SOUL;
         Flags_SetRandomizerInf(RAND_INF_GOHMA_SOUL + index);

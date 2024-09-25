@@ -140,6 +140,9 @@ void Context::GenerateLocationPool() {
     if (mSettings->GetOption(RSK_TRIFORCE_HUNT)) {
         AddLocation(RC_TRIFORCE_COMPLETED);
     }
+    if (mSettings->GetOption(RSK_GK_SHARDS)) {
+        AddLocation(RC_GANONS_KEY_COMPLETED);
+    }
     AddLocations(StaticData::overworldLocations);
 
     if (mSettings->GetOption(RSK_FISHSANITY).IsNot(RO_FISHSANITY_OFF)) {

@@ -261,6 +261,7 @@ void RegionTable_Init() {
                   //Locations
                   LOCATION(RC_LINKS_POCKET,       true),
                   LOCATION(RC_TRIFORCE_COMPLETED, logic->CanCompleteTriforce),
+                  LOCATION(RC_GANONS_KEY_COMPLETED, logic->CanCompleteGanonBossKey),
                   LOCATION(RC_SARIA_SONG_HINT,    logic->CanUse(RG_SARIAS_SONG)),
                 }, {
                   //Exits

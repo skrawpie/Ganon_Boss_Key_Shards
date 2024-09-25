@@ -447,6 +447,7 @@ uint8_t GameInteractor_GetSlipperyFloorActive();
 uint8_t GameInteractor_SecondCollisionUpdate();
 void GameInteractor_SetTriforceHuntPieceGiven(uint8_t state);
 void GameInteractor_SetTriforceHuntCreditsWarpActive(uint8_t state);
+void GameInteractor_SetGKShardGiven(uint8_t state);
 #ifdef __cplusplus
 }
 #endif
@@ -502,6 +503,7 @@ public:
         static uint8_t SecondCollisionUpdate;
         static uint8_t TriforceHuntPieceGiven;
         static uint8_t TriforceHuntCreditsWarpActive;
+        static uint8_t GKShardGiven;
 
         static void SetPacifistMode(bool active);
     };

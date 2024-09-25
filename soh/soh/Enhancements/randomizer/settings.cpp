@@ -79,6 +79,9 @@ void Settings::CreateOptions() {
     mOptions[RSK_TRIFORCE_HUNT] = Option::Bool("Triforce Hunt", CVAR_RANDOMIZER_SETTING("TriforceHunt"), mOptionDescriptions[RSK_TRIFORCE_HUNT], IMFLAG_NONE);
     mOptions[RSK_TRIFORCE_HUNT_PIECES_TOTAL] = Option::U8("Triforce Hunt Total Pieces", {NumOpts(1, 100)}, OptionCategory::Setting, CVAR_RANDOMIZER_SETTING("TriforceHuntTotalPieces"), mOptionDescriptions[RSK_TRIFORCE_HUNT_PIECES_TOTAL], WidgetType::Slider, 29, false, IMFLAG_NONE);
     mOptions[RSK_TRIFORCE_HUNT_PIECES_REQUIRED] = Option::U8("Triforce Hunt Required Pieces", {NumOpts(1, 100)}, OptionCategory::Setting, CVAR_RANDOMIZER_SETTING("TriforceHuntRequiredPieces"), mOptionDescriptions[RSK_TRIFORCE_HUNT_PIECES_REQUIRED], WidgetType::Slider, 19);
+    mOptions[RSK_GK_SHARDS] = Option::Bool("Ganon's Key Shards", CVAR_RANDOMIZER_SETTING("GKShards"), mOptionDescriptions[RSK_GK_SHARDS], IMFLAG_NONE);
+    mOptions[RSK_GK_SHARDS_TOTAL] = Option::U8("Ganon's Key Total Shards", {NumOpts(1, 100)}, OptionCategory::Setting, CVAR_RANDOMIZER_SETTING("GKShardsTotalPieces"), mOptionDescriptions[RSK_GK_SHARDS_TOTAL], WidgetType::Slider, 29, false, IMFLAG_NONE);
+    mOptions[RSK_GK_SHARDS_REQUIRED] = Option::U8("Ganon's Key Required Shards", {NumOpts(1, 100)}, OptionCategory::Setting, CVAR_RANDOMIZER_SETTING("GKShardsRequiredPieces"), mOptionDescriptions[RSK_GK_SHARDS_REQUIRED], WidgetType::Slider, 19);
     mOptions[RSK_MQ_DUNGEON_RANDOM] = Option::U8("MQ Dungeon Setting", {"None", "Set Number", "Random", "Selection Only"}, OptionCategory::Setting, CVAR_RANDOMIZER_SETTING("MQDungeons"), mOptionDescriptions[RSK_MQ_DUNGEON_RANDOM], WidgetType::Combobox, RO_MQ_DUNGEONS_NONE, true, IMFLAG_NONE);
     mOptions[RSK_MQ_DUNGEON_COUNT] = Option::U8("MQ Dungeon Count", {NumOpts(0, 12)}, OptionCategory::Setting, CVAR_RANDOMIZER_SETTING("MQDungeonCount"), "", WidgetType::Slider, 12, true, IMFLAG_NONE);
     mOptions[RSK_MQ_DUNGEON_SET] = Option::Bool("Set Dungeon Quests", {"Off", "On"}, OptionCategory::Setting, CVAR_RANDOMIZER_SETTING("MQDungeonsSelection"), mOptionDescriptions[RSK_MQ_DUNGEON_SET], WidgetType::Checkbox, false, false, IMFLAG_NONE);
@@ -129,7 +132,7 @@ void Settings::CreateOptions() {
     mOptions[RSK_KEYSANITY] = Option::U8("Small Keys", {"Start With", "Vanilla", "Own Dungeon", "Any Dungeon", "Overworld", "Anywhere"}, OptionCategory::Setting, CVAR_RANDOMIZER_SETTING("Keysanity"), mOptionDescriptions[RSK_KEYSANITY], WidgetType::Combobox, RO_DUNGEON_ITEM_LOC_OWN_DUNGEON);
     mOptions[RSK_GERUDO_KEYS] = Option::U8("Gerudo Fortress Keys", {"Vanilla", "Any Dungeon", "Overworld", "Anywhere"}, OptionCategory::Setting, CVAR_RANDOMIZER_SETTING("GerudoKeys"), mOptionDescriptions[RSK_GERUDO_KEYS], WidgetType::Combobox, RO_GERUDO_KEYS_VANILLA);
     mOptions[RSK_BOSS_KEYSANITY] = Option::U8("Boss Keys", {"Start With", "Vanilla", "Own Dungeon", "Any Dungeon", "Overworld", "Anywhere"}, OptionCategory::Setting, CVAR_RANDOMIZER_SETTING("BossKeysanity"), mOptionDescriptions[RSK_BOSS_KEYSANITY], WidgetType::Combobox, RO_DUNGEON_ITEM_LOC_OWN_DUNGEON);
-    mOptions[RSK_GANONS_BOSS_KEY] = Option::U8("Ganon's Boss Key", {"Vanilla", "Own Dungeon", "Start With", "Any Dungeon", "Overworld", "Anywhere", "LACS-Vanilla", "LACS-Stones", "LACS-Medallions", "LACS-Rewards", "LACS-Dungeons", "LACS-Tokens", "100 GS Reward", "Triforce Hunt"}, OptionCategory::Setting, CVAR_RANDOMIZER_SETTING("ShuffleGanonBossKey"), mOptionDescriptions[RSK_GANONS_BOSS_KEY], WidgetType::Combobox, RO_GANON_BOSS_KEY_VANILLA);
+    mOptions[RSK_GANONS_BOSS_KEY] = Option::U8("Ganon's Boss Key", {"Vanilla", "Own Dungeon", "Start With", "Any Dungeon", "Overworld", "Anywhere", "LACS-Vanilla", "LACS-Stones", "LACS-Medallions", "LACS-Rewards", "LACS-Dungeons", "LACS-Tokens", "100 GS Reward", "Triforce Hunt", "Ganon's Key Shards"}, OptionCategory::Setting, CVAR_RANDOMIZER_SETTING("ShuffleGanonBossKey"), mOptionDescriptions[RSK_GANONS_BOSS_KEY], WidgetType::Combobox, RO_GANON_BOSS_KEY_VANILLA);
     mOptions[RSK_LACS_STONE_COUNT] = Option::U8("Stone Count", {NumOpts(0, 4)}, OptionCategory::Setting, CVAR_RANDOMIZER_SETTING("LacsStoneCount"), "", WidgetType::Slider, 3, true);
     mOptions[RSK_LACS_MEDALLION_COUNT] = Option::U8("Medallion Count", {NumOpts(0, 7)}, OptionCategory::Setting, CVAR_RANDOMIZER_SETTING("LacsMedallionCount"), "", WidgetType::Slider, 6, true);
     mOptions[RSK_LACS_REWARD_COUNT] = Option::U8("Reward Count", {NumOpts(0, 10)}, OptionCategory::Setting, CVAR_RANDOMIZER_SETTING("LacsRewardCount"), "", WidgetType::Slider, 9, true);
@@ -630,7 +633,10 @@ void Settings::CreateOptions() {
         &mOptions[RSK_MQ_GANONS_CASTLE],
         &mOptions[RSK_TRIFORCE_HUNT],
         &mOptions[RSK_TRIFORCE_HUNT_PIECES_TOTAL],
-        &mOptions[RSK_TRIFORCE_HUNT_PIECES_REQUIRED]
+        &mOptions[RSK_TRIFORCE_HUNT_PIECES_REQUIRED],
+        &mOptions[RSK_GK_SHARDS],
+        &mOptions[RSK_GK_SHARDS_TOTAL],
+        &mOptions[RSK_GK_SHARDS_REQUIRED]
     }, false, WidgetContainerType::COLUMN);
     mOptionGroups[RSG_SHUFFLE_ENTRANCES_IMGUI] = OptionGroup::SubGroup("Shuffle Entrances", {
         &mOptions[RSK_SHUFFLE_DUNGEON_ENTRANCES],
@@ -853,6 +859,9 @@ void Settings::CreateOptions() {
         &mOptions[RSK_TRIFORCE_HUNT],
         &mOptions[RSK_TRIFORCE_HUNT_PIECES_TOTAL],
         &mOptions[RSK_TRIFORCE_HUNT_PIECES_REQUIRED],
+        &mOptions[RSK_GK_SHARDS],
+        &mOptions[RSK_GK_SHARDS_TOTAL],
+        &mOptions[RSK_GK_SHARDS_REQUIRED],
         &mOptions[RSK_MQ_DUNGEON_RANDOM],
         &mOptions[RSK_MQ_DUNGEON_COUNT],
         &mOptions[RSK_MQ_DUNGEON_SET],
@@ -1194,6 +1203,9 @@ void Settings::CreateOptions() {
         { "World Settings:Triforce Hunt", RSK_TRIFORCE_HUNT },
         { "World Settings:Triforce Hunt Total Pieces", RSK_TRIFORCE_HUNT_PIECES_TOTAL },
         { "World Settings:Triforce Hunt Required Pieces", RSK_TRIFORCE_HUNT_PIECES_REQUIRED },
+        { "World Settings:Ganon's Key Shards", RSK_GK_SHARDS },
+        { "World Settings:Ganon's Key Total Shards", RSK_GK_SHARDS_TOTAL },
+        { "World Settings:Ganon's Key Required Shards", RSK_GK_SHARDS_REQUIRED },
         { "Miscellaneous Settings:Gossip Stone Hints", RSK_GOSSIP_STONE_HINTS },
         { "Miscellaneous Settings:Hint Clarity", RSK_HINT_CLARITY },
         { "Miscellaneous Settings:ToT Altar Hint", RSK_TOT_ALTAR_HINT },
@@ -1346,6 +1358,9 @@ void Settings::UpdateOptionProperties() {
         mOptions[RSK_TRIFORCE_HUNT].Disable("");
         mOptions[RSK_TRIFORCE_HUNT_PIECES_TOTAL].Disable("");
         mOptions[RSK_TRIFORCE_HUNT_PIECES_REQUIRED].Disable("");
+        mOptions[RSK_GK_SHARDS].Disable("");
+        mOptions[RSK_GK_SHARDS_TOTAL].Disable("");
+        mOptions[RSK_GK_SHARDS_REQUIRED].Disable("");
         mOptionGroups[RSG_ITEMS_IMGUI_TABLE].Disable();
         mOptionGroups[RSG_GAMEPLAY_IMGUI_TABLE].Disable();
         mOptions[RSK_LINKS_POCKET].Disable("");
@@ -1466,6 +1481,24 @@ void Settings::UpdateOptionProperties() {
         const uint8_t triforceTotal = CVarGetInteger(CVAR_RANDOMIZER_SETTING("TriforceHuntTotalPieces"), 30);
         if (mOptions[RSK_TRIFORCE_HUNT_PIECES_REQUIRED].GetOptionCount() != triforceTotal + 1) {
             mOptions[RSK_TRIFORCE_HUNT_PIECES_REQUIRED].ChangeOptions(NumOpts(1, triforceTotal + 1));
+        }
+        mOptions[RSK_GK_SHARDS].Enable();
+        mOptions[RSK_GK_SHARDS_TOTAL].Enable();
+        mOptions[RSK_GK_SHARDS_REQUIRED].Enable();
+        // Remove the pieces required/total sliders and add a separator after Ganon's Key Shards if Ganon's Key Shards is off
+        if (CVarGetInteger(CVAR_RANDOMIZER_SETTING("GKShards"), RO_GENERIC_OFF) == RO_GENERIC_OFF) {
+            mOptions[RSK_GK_SHARDS_REQUIRED].Hide();
+            mOptions[RSK_GK_SHARDS_TOTAL].Hide();
+            mOptions[RSK_GK_SHARDS].AddFlag(IMFLAG_SEPARATOR_BOTTOM);
+        } else {
+            mOptions[RSK_GK_SHARDS_REQUIRED].Unhide();
+            mOptions[RSK_GK_SHARDS_TOTAL].Unhide();
+            mOptions[RSK_GK_SHARDS].RemoveFlag(IMFLAG_SEPARATOR_BOTTOM);
+        }
+        // Update Ganon's Boss Key shards required to be capped at the current value for shards total.
+        const uint8_t GKShardsTotal = CVarGetInteger(CVAR_RANDOMIZER_SETTING("GKShardsTotalPieces"), 30);
+        if (mOptions[RSK_GK_SHARDS_REQUIRED].GetOptionCount() != GKShardsTotal + 1) {
+            mOptions[RSK_GK_SHARDS_REQUIRED].ChangeOptions(NumOpts(1, GKShardsTotal + 1));
         }
         mOptionGroups[RSG_ITEMS_IMGUI_TABLE].Enable();
         mOptionGroups[RSG_GAMEPLAY_IMGUI_TABLE].Enable();
@@ -1673,7 +1706,10 @@ void Settings::UpdateOptionProperties() {
     }
     if (CVarGetInteger(CVAR_RANDOMIZER_SETTING("TriforceHunt"), RO_GENERIC_OFF)) {
         mOptions[RSK_GANONS_BOSS_KEY].Disable("This option is disabled because Triforce Hunt is enabled."
-            "Ganon's Boss key\nwill instead be given to you after Triforce Hunt completion.");
+            "Ganon's Boss Key\nwill instead be given to you after Triforce Hunt completion.");
+    } else if (CVarGetInteger(CVAR_RANDOMIZER_SETTING("GKShards"), RO_GENERIC_OFF)) {
+        mOptions[RSK_GANONS_BOSS_KEY].Disable("This option is disabled because Ganon's Key Shards is enabled."
+            "Ganon's Boss Key\nwill instead be given to you after aquiring all of the shards.");
     } else {
         mOptions[RSK_GANONS_BOSS_KEY].Enable();
     }
@@ -1811,6 +1847,10 @@ void Settings::FinalizeSettings(const std::set<RandomizerCheck>& excludedLocatio
 
         if (mOptions[RSK_TRIFORCE_HUNT]) {
             mOptions[RSK_GANONS_BOSS_KEY].SetSelectedIndex(RO_GANON_BOSS_KEY_TRIFORCE_HUNT);
+        }
+
+        if (mOptions[RSK_GK_SHARDS]) {
+            mOptions[RSK_GANONS_BOSS_KEY].SetSelectedIndex(RO_GANON_BOSS_KEY_GK_SHARDS);
         }
 
         // Force 100 GS Shuffle if that's where Ganon's Boss Key is
@@ -2292,6 +2332,8 @@ void Settings::ParseJson(nlohmann::json spoilerFileJson) {
                 case RSK_BIG_POE_COUNT:
                 case RSK_TRIFORCE_HUNT_PIECES_TOTAL:
                 case RSK_TRIFORCE_HUNT_PIECES_REQUIRED:
+                case RSK_GK_SHARDS_TOTAL:
+                case RSK_GK_SHARDS_REQUIRED:
                 case RSK_STARTING_HEARTS:
                     numericValueString = it.value();
                     mOptions[index].SetSelectedIndex(std::stoi(numericValueString) - 1);
@@ -2423,6 +2465,7 @@ void Settings::ParseJson(nlohmann::json spoilerFileJson) {
                 case RSK_SHOPSANITY_PRICES_AFFORDABLE:
                 case RSK_ALL_LOCATIONS_REACHABLE:
                 case RSK_TRIFORCE_HUNT:
+                case RSK_GK_SHARDS: 
                 case RSK_MQ_DUNGEON_SET:
                     if (it.value() == "Off") {
                         mOptions[index].SetSelectedIndex(RO_GENERIC_OFF);
@@ -2616,6 +2659,8 @@ void Settings::ParseJson(nlohmann::json spoilerFileJson) {
                         mOptions[index].SetSelectedIndex(RO_GANON_BOSS_KEY_KAK_TOKENS);
                     } else if (it.value() == "Triforce Hunt") {
                         mOptions[index].SetSelectedIndex(RO_GANON_BOSS_KEY_TRIFORCE_HUNT);
+                    } else if (it.value() == "Ganon's Key Shards") {
+                        mOptions[index].SetSelectedIndex(RO_GANON_BOSS_KEY_GK_SHARDS);
                     }
                     break;
                 case RSK_MQ_DUNGEON_RANDOM:
